@@ -5,7 +5,8 @@
 var express = require('express');
 var routes = require('./routes');
 var settings = require('./settings');
-var MongoStore = require('connect-mongo');
+// var MongoStore = require('connect-mongo');
+var MongoStore = require('connect-mongo')(express);
 
 var app = module.exports = express.createServer();
 
@@ -44,6 +45,9 @@ app.configure('production', function(){
   });
 });
 
+/**
+ * 创建动态试图助手
+ */
 app.dynamicHelpers({
   user: function(req, res) {
     return req.session.user;
@@ -61,7 +65,7 @@ app.dynamicHelpers({
       return succ;
     else
       return null;
-  },
+  }
 });
 
 if (!module.parent) {

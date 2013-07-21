@@ -26,8 +26,19 @@ module.exports = function(app) {
   app.post('/reg', checkNotLogin);
   app.post('/reg', function(req, res) {
     //檢驗用戶兩次輸入的口令是否一致
+    /**
+     * req.body POST请求信息解析过后的对象
+     */
     if (req.body['password-repeat'] != req.body['password']) {
+      /**
+       * req.flash Express提供的一个奇妙的工具，通过它保存的变量只会在用户当前
+和下一次的请求中被访问，之后会被清除，通过它我们可以很方便地实现页面的通知
+和错误信息显示功能。
+       */
       req.flash('error', '兩次輸入的口令不一致');
+      /**
+       * res.redirect重定向功能
+       */
       return res.redirect('/reg');
     }
   
