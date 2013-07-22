@@ -1,7 +1,6 @@
-var sys = require('sys');
-	http = require('http');
-http.createServer(function(request, response){
-	response.sendHeader(200, {'Content-Type': 'text/html'});
-	response.write('Hello World!');
-	response.close();
+var http = require('http');
+http.createServer(function(req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write('<h1>Node.js</h1>');
+  res.end('<p>Hello World</p>');
 }).listen(8080);
