@@ -3,12 +3,14 @@ var User = require('../models/user.js');
 var Post = require('../models/post.js');
 
 module.exports = function(app) {
+  // 创建url映射规则
   app.get('/', function(req, res) {
     //throw new Error('An error for test purposes.');
     Post.get(null, function(err, posts) {
       if (err) {
         posts = [];
       }
+      // 调用模板解析引擎，翻译名为index的模板，并传入一个对象作为参数
       res.render('index', {
         title: '首頁',
         posts: posts,

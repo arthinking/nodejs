@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-
+// 引入相关模块
 var express = require('express');
 var routes = require('./routes');
 var settings = require('./settings');
@@ -9,13 +9,14 @@ var settings = require('./settings');
 var MongoStore = require('connect-mongo')(express);
 
 var app = module.exports = express.createServer();
-
+// 引入文件系统
 var fs = require('fs');
+// 日志文件
 var accessLogfile = fs.createWriteStream('access.log', {flags: 'a'});
 var errorLogfile = fs.createWriteStream('error.log', {flags: 'a'});
 
 // Configuration
-
+// 指定了通用环境下的参数
 app.configure(function(){
   app.use(express.logger({stream: accessLogfile}));
   app.set('views', __dirname + '/views');
@@ -29,14 +30,17 @@ app.configure(function(){
       db: settings.db
     })
   }));
+  // 设置项目路由支持
   app.use(express.router(routes));
   app.use(express.static(__dirname + '/public'));
 });
 
+// 指定开发环境下的参数
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
+// 指定产品环境下的参数
 app.configure('production', function(){
   app.error(function (err, req, res, next) {
     var meta = '[' + new Date() + '] ' + req.url + '\n';
